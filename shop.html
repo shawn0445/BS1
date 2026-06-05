@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ButcherShop | Collections</title>
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bs-body-bg: #0a0a0a;
+            --bs-body-color: #e0e0e0;
+            --accent-color: #8B0000; /* Deep Butcher Red */
+            --accent-hover: #660000;
+            --overlay-dark: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3) 100%);
+            --overlay-center: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85));
+            --overlay-heavy: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            overflow-x: hidden;
+            padding-left: 64px; /* Space for the thin sidebar */
+        }
+
+        h1, h2, h3, h4, h5, .navbar-brand {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .text-accent { color: var(--accent-color) !important; }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: #fff;
+            font-weight: 600;
+            border: 1px solid var(--accent-color);
+            padding: 12px 32px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .btn-outline-accent {
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-weight: 600;
+            padding: 12px 32px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+        .btn-outline-accent:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* Top Navigation Bar */
+        .top-navbar {
+            background-color: rgba(10, 10, 10, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+            padding: 1rem 0;
+            top: 0;
+            z-index: 1040;
+        }
+        .top-navbar .navbar-brand {
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .top-navbar .nav-link {
+            color: #ccc !important;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+        .top-navbar .nav-link:hover, .top-navbar .nav-link.active {
+            color: var(--accent-color) !important;
+            /* text-decoration: underline; */
+        }
+
+        /* Thin Vertical Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 64px; /* Thin sidebar */
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(139, 0, 0, 0.2);
+            z-index: 1000;
+            padding: 2rem 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        .sidebar .vertical-brand {
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            color: #e0e0e0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            white-space: nowrap;
+            transform: rotate(180deg); /* Rotate to read top-to-bottom */
+            text-align: center;
+        }
+        
+        .sidebar .vertical-brand span.text-accent {
+            color: var(--accent-color);
+        }
+        
+        .sidebar-nav {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .sidebar-nav .nav-item {
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .sidebar-nav .nav-link {
+            color: #ccc !important;
+            font-weight: 500;
+            padding: 1rem 0;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 70px;
+        }
+        
+        .sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.active {
+            color: var(--accent-color) !important;
+            background-color: rgba(139, 0, 0, 0.15);
+        }
+        
+        .sidebar-nav .nav-link i {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .sidebar-nav .nav-link span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(139, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .sidebar-footer .btn {
+            padding: 0.75rem 0.5rem;
+            width: 100%;
+        }
+
+        .sidebar-logo {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(139,0,0,0.4);
+
+            border-radius: 50%;
+
+            color: #ff4d4d;
+
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+
+            margin-bottom: 3rem;
+        }
+
+        /* Hero Section with Background Image */
+        .hero-section {
+            background: var(--overlay-dark), url('https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 60vh; /* Reduced height for shop page */
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            text-align: left !important; /* Strictly left aligned */
+            padding-left: 5%;
+        }
+        .hero-content h1 {
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.9), 0 0 30px rgba(139, 0, 0, 0.3);
+        }
+        .hero-content h1 {
+            -webkit-text-stroke: 1px rgba(0,0,0,0.5);
+            paint-order: stroke fill;
+        }
+        .hero-content h6 {
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
+        }
+
+        .hero-content h6 {
+            -webkit-text-stroke: 1px rgba(0,0,0,0.5);
+            paint-order: stroke fill;
+        }
+
+        .hero-content p {
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* end of new section */
+
+        .section-bg-img {
+            background: var(--overlay-center), url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=2069&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* Featured Cut Section Background */
+        .featured-cut-section {
+            background: var(--overlay-heavy), url('https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        /* update the featured cut section for more visibility */
+        /* Featured Cut Section Text Enhancements */
+        .featured-cut-section h6 {
+            color: #ffffff !important;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            /* Optional: Adds a premium red "pill" background behind the label */
+            background: rgba(139, 0, 0, 0.85); 
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 4px;
+            margin-bottom: 1rem !important;
+        }
+
+        .featured-cut-section h2 {
+            text-shadow: 0 4px 8px rgba(0,0,0,0.9);
+            font-weight: 700;
+        }
+
+        .featured-cut-section p {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            font-weight: 500;
+        }
+
+        /* Fix for the View Details Button */
+        /* We change it from outline to solid so it's always visible, not just on hover */
+        .btn-view-details {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: 1px solid var(--accent-color);
+            font-weight: 600;
+            padding: 12px 32px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4); /* Adds a subtle red glow */
+        }
+
+        .btn-view-details:hover {
+            background-color: #ffffff;
+            color: var(--accent-color);
+            border-color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        }
+
+
+        /* Curated Collections Section Background */
+        .collections-section {
+            background: var(--overlay-heavy), url('https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .section-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Cards */
+        .collection-card {
+            background-color: rgba(17, 17, 17, 0.95);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .collection-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(139, 0, 0, 0.3);
+            background-color: rgba(139, 0, 0, 0.1);
+        }
+        .collection-card img {
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .collection-card:hover img {
+            transform: scale(1.05);
+            /* transform: scale(1.5); */
+        }
+
+        /* Form */
+        .form-control-custom {
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 14px 20px;
+        }
+        .form-control-custom:focus {
+            background-color: rgba(255,255,255,0.1);
+            border-color: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 0 0 0.25rem rgba(139, 0, 0, 0.25);
+        }
+        /* --- Search Bar Placeholder Fix --- */
+        .form-control-custom::placeholder {
+            color: rgba(255, 255, 255, 0.5) !important; /* A bright, readable light grey/white */
+            opacity: 1; /* Overrides default browser transparency */
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        /* Slightly fade it when the user clicks inside the box to type */
+        .form-control-custom:focus::placeholder {
+            color: rgba(255, 255, 255, 0.2) !important;
+            transition: color 0.3s ease;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #050505;
+            border-top: 1px solid rgba(139, 0, 0, 0.2);
+        }
+        footer a {
+            color: #888;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        footer a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        /*Style code added for curated collections cards, feel free to modify as needed */
+
+        /* --- Tab Navigation Overrides --- */
+        .btn-tab-custom {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            color: #ccc;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-tab-custom:hover {
+            background: rgba(139, 0, 0, 0.2);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+
+        /* Force Red Background and White Text for Active Tab (Overrides Bootstrap Blue) */
+        .btn-tab-custom.active {
+            background: var(--accent-color) !important;
+            border-color: var(--accent-color) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.5);
+        }
+
+        /* --- Text Visibility Enhancements for Tab Content --- */
+
+        /* Make the h6 labels pop with a dark background pill and left border */
+        .tab-content h6.text-accent {
+            color: #ff4d4d !important; /* Slightly brighter red for better visibility */
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.65); /* Dark semi-transparent backing */
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 4px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 1rem !important;
+        }
+
+        /* Enhance list items and checkmarks */
+        .tab-content .list-unstyled li {
+            font-weight: 500;
+            font-size: 1.05rem;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .tab-content .list-unstyled .bi-check2 {
+            color: #ff3333 !important; /* Brighter red for the icon to pop */
+            font-size: 1.2rem;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.9)); /* Ensures tick is visible on any background */
+        }
+
+        /* Ensure paragraph text is highly readable */
+        .tab-content p {
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            font-weight: 400;
+        }
+
+        /* --- Image Hover Zoom Effect --- */
+
+        /* 1. For Featured Cut and Boutique images (.section-img) */
+        .section-img {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth, premium easing */
+        }
+        .section-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* 2. For Collection Tab images (Wrapper approach to keep rounded corners perfect) */
+        .img-zoom-wrapper {
+            overflow: hidden; /* Crucial: keeps the zoomed image inside the container */
+            border-radius: 0.375rem; /* Matches Bootstrap's .rounded class */
+            box-shadow: 0 1rem 3rem rgba(0,0,0,0.5); /* Matches Bootstrap's .shadow-lg */
+        }
+
+        .img-zoom-wrapper img {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .img-zoom-wrapper:hover img {
+            transform: scale(1.05);
+        }
+        /* End of Curated Collections Card Styles */
+
+        /* footer butcher shop text */
+        footer .text-accent {
+            font-weight: 700;
+        }
+
+        /* test html targeting*/
+        /* #profiles .container h2.text-center{ */
+           /* color: #ff3333 !important; /*Brighter, high-contrast red*/ */
+            /* font-weight: bolder; */
+            /* font-family: 'Inter', sans-serif; */
+        /* }  */
+
+        /*Start Signature Profiles section changes*/
+        /* #profiles {
+
+        } */
+        /* Signature Profiles Background & Layout */
+        /* DO NOT REMOVE - Required for browser rendering bug (gradient+image composite) */
+        #profiles { }
+
+        /* Actual styles - second declaration forces proper render */
+        /* =====================================
+        SIGNATURE PROFILES — PREMIUM FIX
+        ===================================== */
+
+        #profiles {
+            position: relative;
+            background: linear-gradient(rgba(10,10,10,0.82), rgba(10,10,10,0.96)),
+                        url("https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=2070&auto=format&fit=crop")
+                        center/cover no-repeat;
+            padding: 90px 0;
+            background-blend-mode: overlay;
+        }
+
+        /* soft vignette depth */
+        #profiles::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center,
+                rgba(0,0,0,0.2),
+                rgba(0,0,0,0.92));
+            pointer-events: none;
+        }
+
+        #profiles .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===============================
+        TITLE IMPROVEMENT
+        ================================ */
+
+        #profiles h2 {
+            font-size: 2.6rem;
+            letter-spacing: 1px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        /* ===============================
+        GRID SPACING FIX
+        ================================ */
+
+        #profiles .row {
+            row-gap: 30px;
+        }
+
+        /* ===============================
+        CARD — LUXURY UPGRADE
+        ================================ */
+
+        /* #profiles .profile-card {
+            height: 100%;
+            padding: 2.4rem 2rem;
+            background: rgba(18, 18, 18, 0.72);
+            border: 1px solid rgba(139, 0, 0, 0.25);
+            border-radius: 16px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+            transition: all 0.45s ease;
+            position: relative;
+            overflow: hidden;
+        } */
+         #profiles .profile-card {
+            background: linear-gradient(
+                145deg,
+                rgba(20, 20, 20, 0.55),
+                rgba(10, 10, 10, 0.35)
+            );
+
+            border: 1px solid rgba(139, 0, 0, 0.18);
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,255,255,0.03);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        #profiles .profile-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background: radial-gradient(
+                circle at top left,
+                rgba(139, 0, 0, 0.08),
+                transparent 60%
+            );
+
+            pointer-events: none;
+        }
+
+        /* top accent line (premium label feel) */
+        #profiles .profile-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg,
+                transparent,
+                var(--accent-color),
+                transparent);
+            opacity: 0.7;
+        }
+
+        /* hover = elevated product card feel */
+        #profiles .profile-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(255, 51, 51, 0.6);
+            box-shadow: 0 25px 60px rgba(139, 0, 0, 0.25);
+            background: rgba(25, 25, 25, 0.85);
+        }
+
+        /* ===============================
+        TEXT FIX (MAJOR DIFFERENCE MAKER)
+        ================================ */
+
+        #profiles .profile-card h5 {
+            font-size: 1.05rem;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            color: #ff4d4d !important;
+        }
+
+        /* replace ugly dot with refined indicator */
+        #profiles .profile-card h5::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 12px rgba(139,0,0,0.6);
+        }
+
+        /* quote styling becomes intentional “tasting note” */
+        #profiles .profile-card p {
+            font-style: italic;
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: rgba(255,255,255,0.78);
+            padding-left: 14px;
+            border-left: 2px solid rgba(139,0,0,0.35);
+            margin-bottom: 0;
+        }
+
+        /* hover improves readability */
+        #profiles .profile-card:hover p {
+            color: rgba(255,255,255,0.92);
+        }
+        /*end of signature profile changes*/
+
+        /* NEW: Product Page Specific Styles */
+        .product-filters {
+            background-color: rgba(17, 17, 17, 0.95);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+        }
+        .filter-category {
+            margin-bottom: 1.5rem;
+        }
+        .filter-title {
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.75rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .filter-option input[type="checkbox"] {
+            appearance: none; /* Remove default checkbox appearance */
+            width: 18px;      /* Set custom width */
+            height: 18px;     /* Set custom height */
+            border: 1px solid #ccc; /* Default border */
+            border-radius: 3px; /* Rounded corners */
+            background-color: rgba(255, 255, 255, 0.1); /* Slight background */
+            position: relative;
+            cursor: pointer;
+        }
+        .filter-option input[type="checkbox"]:checked {
+            background-color: var(--accent-color); /* Red background when checked */
+            border-color: var(--accent-color);     /* Red border when checked */
+        }
+        .filter-option input[type="checkbox"]:checked::after {
+            content: '\2713'; /* Unicode checkmark */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white; /* White checkmark */
+            font-size: 0.8rem; /* Adjust size */
+            font-weight: bold;
+        }
+        .filter-option label {
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            margin-left: 0.75rem; /* Space between checkbox and label */
+        }
+        .filter-option label:hover {
+            color: var(--accent-color);
+        }
+
+        .product-card {
+            background-color: rgba(17, 17, 17, 0.95);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-radius: 4px;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            display: flex; /* Added display flex */
+            flex-direction: column; /* Added flex direction column */
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.2);
+        }
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 1.5rem;
+            flex-grow: 1; /* Added flex-grow to push footer down */
+            display: flex; /* Added display flex */
+            flex-direction: column; /* Added flex direction column */
+        }
+        .product-title {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .product-description {
+            color: #ccc;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            flex-grow: 1; /* Added flex-grow to description */
+        }
+        .product-price {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .add-to-cart-btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: 1px solid var(--accent-color); /* Added border */
+            padding: 0.75rem 1.5rem; /* Increased padding */
+            font-size: 0.8rem; /* Slightly larger font */
+            font-weight: 600; /* Made bold */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .add-to-cart-btn:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover); /* Updated border on hover */
+            color: #fff; /* Ensure text stays white */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(139, 0, 0, 0.4); /* Added subtle shadow */
+        }
+
+        .cart-notification {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            
+            body {
+                padding-left: 0;
+            }
+            
+            .mobile-menu-toggle {
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1050;
+                display: block;
+            }
+        }
+        
+        .mobile-menu-toggle {
+            display: none;
+            z-index: 1050;
+        }
+
+        /* --- Tooltip Override Styles --- */
+        /* Target the main tooltip element */
+        .tooltip {
+            --bs-tooltip-bg: #212529; /* Dark background for the tooltip */
+            --bs-tooltip-color: #e0e0e0; /* Light text color matching your theme */
+            /* Adjust other properties if needed */
+            opacity: 0.95; /* Example: slightly less transparent */
+        }
+
+        /* Specifically target the tooltip inner content */
+        .tooltip .tooltip-inner {
+            background-color: var(--bs-tooltip-bg);
+            color: var(--bs-tooltip-color);
+            border-radius: 4px; /* Or keep Bootstrap's default */
+            padding: 6px 12px;  /* Or keep Bootstrap's default */
+            font-size: 0.875rem; /* Adjust size if needed */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional subtle shadow */
+        }
+
+        /* Optionally, target the arrow if visibility is also an issue */
+        .tooltip .tooltip-arrow::before {
+            border-top-color: var(--bs-tooltip-bg); /* For top placement */
+            border-bottom-color: var(--bs-tooltip-bg); /* For bottom placement */
+            border-left-color: var(--bs-tooltip-bg); /* For left placement */
+            border-right-color: var(--bs-tooltip-bg); /* For right placement */
+        }
+        /* --- End Tooltip Override Styles --- */
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-toggle btn btn-accent d-md-none" id="mobileMenuToggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark top-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="text-accent">BS</span> <span class="text-white">ButcherShop</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="topNavbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="shop.html">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cutting-room.html">The Cutting Room</a></li>
+                    <li class="nav-item"><a class="nav-link" href="aboutus.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contactus.html">Contact Us</a></li>
+                </ul>
+                <a href="shop.html" class="btn btn-accent btn-sm">Shop Online</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Vertical Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            BS
+        </div>
+        
+        <ul class="nav flex-column sidebar-nav">
+            <li class="nav-item">
+                <a class="nav-link active"
+                   href="shop.html"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="right"
+                   title="Browse our curated meat collections">
+                    <i class="bi bi-collection"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="cutting-room.html"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="right"
+                   title="Master cooking techniques">
+                    <i class="bi bi-book"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="aboutus.html"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="right"
+                   title="Learn about our history and heritage">
+                    <i class="bi bi-info-circle"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="contactus.html"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="right"
+                   title="Get in touch with us">
+                    <i class="bi bi-envelope"></i>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" class="btn btn-accent">
+                <i class="bi bi-cart"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section (for Shop Page) -->
+    <header class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 hero-content" data-aos="fade-right" data-aos-duration="1000">
+                    <h6 class="text-accent text-uppercase mb-3" style="letter-spacing: 3px; font-size: 20px; font-weight: bolder;">Curated Excellence</h6>
+                    <h1 class="display-3 fw-bold mb-4 text-white">Our <span class="text-accent">Collections.</span></h1>
+                    <p class="lead mb-5 text-light opacity-75" style="max-width: 600px;">
+                        Discover our hand-picked selection of the finest cuts. From premium Wagyu to expertly dry-aged steaks, find your next culinary masterpiece.
+                    </p>
+                    <!-- Optional: Add a button here if needed -->
+                    <!-- <a href="#products" class="btn btn-accent btn-lg">Explore Now</a> -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="pt-5" style="margin-top: 0px;"> <!-- Removed previous top margin -->
+        <div class="container py-5"> <!-- Added padding -->
+
+            <!-- Content Title & Notifications -->
+            <section class="d-flex justify-content-between align-items-end mb-5">
+                <div>
+                    <!-- <h2 class="display-4 fw-bold text-white">Collections</h2> --> <!-- Moved to hero section -->
+                </div>
+                <!-- Cart Notification -->
+                <!-- <div class="cart-notification d-flex align-items-center justify-content-between min-w-[300px] shadow-lg">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        <span class="fw-medium text-sm">Added to cart!</span>
+                    </div>
+                    <button class="ms-4 opacity-70 hover:opacity-100 border-0 bg-transparent text-white">×</button>
+                </div> -->
+            </section>
+
+            <div class="row">
+                <!-- Filter Sidebar -->
+                <aside class="col-lg-3 mb-4 mb-lg-0" data-purpose="product-filters">
+                    <div class="product-filters">
+                        <h3 class="text-uppercase text-white mb-4 pb-2 border-bottom border-secondary">Filter By</h3>
+                        
+                        <!-- Category: Cut -->
+                        <div class="filter-category">
+                            <div class="filter-title">
+                                <span>Cut</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="ribeye" checked>
+                                    <label for="ribeye" class="text-light">Ribeye</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="sirloin" checked>
+                                    <label for="sirloin" class="text-light">Sirloin</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="filet" checked>
+                                    <label for="filet" class="text-light">Filet</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="porterhouse" checked>
+                                    <label for="porterhouse" class="text-light">Porterhouse</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category: Aging -->
+                        <div class="filter-category">
+                            <div class="filter-title">
+                                <span>Aging</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="dry-aged" checked>
+                                    <label for="dry-aged" class="text-light">Dry-Aged 30 Day</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="wet-aged" checked>
+                                    <label for="wet-aged" class="text-light">Wet-Aged</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category: Price -->
+                        <div class="filter-category">
+                            <div class="filter-title">
+                                <span>Price</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="price1">
+                                    <label for="price1" class="text-light">$30 - $60</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="price2">
+                                    <label for="price2" class="text-light">$60 - $100</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category: SBCVE -->
+                        <div class="filter-category">
+                            <div class="filter-title">
+                                <span>SBCVE</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="sbvce" checked>
+                                    <label for="sbvce" class="text-light">$309 - $2,000</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Product Grid -->
+                <section class="col-lg-9" data-purpose="product-display">
+                    <div class="row g-4">
+                        <!-- Product Card 1 -->
+                        <article class="col-md-6 col-lg-4" data-aos="fade-up">
+                            <div class="product-card h-100">
+                                <div class="overflow-hidden">
+                                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDimJz6RzzfxIAa2fvQre4gqaICYnQdJ5UWPz-HcCyeQC65iM2fGvVZoSRKkrIaYFl85g7t3uyPLYufClroRe9zDQAf9thUcYSR9B_mvqBi69AzzJnKO9Pz8fzGo5AeNC9EPPqSKRGMBkNnM4dHBlXH496jHKmh62Y8CymC_un__nEsej4YuCzIEd2YdFyo345ek6Z3heFm441Y2sikzVIORBcV2X6sfaH_KXy8ASJW6-NtIngwoRqZSPxJ-dNQ1pcqTkipk1EI0jw" 
+                                         alt="A5 Wagyu Ribeye" class="product-image">
+                                </div>
+                                <div class="product-info d-flex flex-column h-100">
+                                    <h3 class="product-title mb-2">A5 Wagyu Ribeye</h3>
+                                    <p class="product-description flex-grow-1">
+                                        Gourmet Reimagined. Experience a new level of excellence. Masterfully cut, and of fatty sourced.
+                                    </p>
+                                    <!-- Simplified structure for price and button -->
+                                    <div class="d-flex justify-content-between align-items-center pt-3 mt-auto">
+                                        <span class="product-price">$159.00</span>
+                                        <button class="btn add-to-cart-btn">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 2 -->
+                        <article class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                            <div class="product-card h-100">
+                                <div class="overflow-hidden">
+                                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNE5SuWeh4R-4AvSf43_jUbnyBkYffmRIOYvVts2KcmMa_bq15FqMR7b4ftH7hMsjIkkrybPgMAzRBAXw54c-wLibmjTcnpmIwkNmmG593nsP_motxvh7rkEGZTlrpCP8Z_d0ZFtfCBZSTy_WygrInYBnG55Z0bO-2U0nsIz_bItROtEkGErOTCx2cIzfkQ-Dv3snO2wXnWXHovtj293Bz5hD4gnvmVPmuDIhSBbV327yn1CofauPDGLK6d4wy_dgXPhVQvnNThOA" 
+                                         alt="Dry-Aged Porterhouse" class="product-image">
+                                </div>
+                                <div class="product-info d-flex flex-column h-100">
+                                    <h3 class="product-title mb-2">Dry-Aged Porterhouse</h3>
+                                    <p class="product-description flex-grow-1">
+                                        "Intense nutty qualities of porterhouse, minced and precision bunch."
+                                    </p>
+                                     <!-- Simplified structure for price and button -->
+                                    <div class="d-flex justify-content-between align-items-center pt-3 mt-auto">
+                                        <span class="product-price">$129.00</span>
+                                        <button class="btn add-to-cart-btn">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 3 -->
+                        <article class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                            <div class="product-card h-100">
+                                <div class="overflow-hidden">
+                                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb-DYCnJZvqJLzFN9kuqwqrQ7AKLjbxh5J4D2IPb-Su4jna-DyVWlXOwgfVA_ZiKHYg_xkq7i0QCQrsmy2R9MEw8-BY8u3yetzAk--DylkfN3G8Pnqv8vd-Se25CgO-ysUH6B_due0mX1I_Tb8Hoop5Ck1pNDedOb_nSNzE7LmdsIXmJv9hft5XmKwwhLdXxcnNycFsA0jK9fBzgZVlNlIZpvDr0oGMioZpyMiEkoTTk5Xt4xJ20zLS9AirLHeHIKTltI7cagCg48" 
+                                         alt="Reserve Filet Mignon" class="product-image">
+                                </div>
+                                <div class="product-info d-flex flex-column h-100">
+                                    <h3 class="product-title mb-2">Reserve Filet Mignon</h3>
+                                    <p class="product-description flex-grow-1">
+                                        "Limited edition moss creaminess with action, mineral texture."
+                                    </p>
+                                     <!-- Simplified structure for price and button -->
+                                    <div class="d-flex justify-content-between align-items-center pt-3 mt-auto">
+                                        <span class="product-price">$139.00</span>
+                                        <button class="btn add-to-cart-btn">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 4 -->
+                        <article class="col-md-6 col-lg-4" data-aos="fade-up">
+                            <div class="product-card h-100">
+                                <div class="overflow-hidden">
+                                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNE5SuWeh4R-4AvSf43_jUbnyBkYffmRIOYvVts2KcmMa_bq15FqMR7b4ftH7hMsjIkkrybPgMAzRBAXw54c-wLibmjTcnpmIwkNmmG593nsP_motxvh7rkEGZTlrpCP8Z_d0ZFtfCBZSTy_WygrInYBnG55Z0bO-2U0nsIz_bItROtEkGErOTCx2cIzfkQ-Dv3snO2wXnWXHovtj293Bz5hD4gnvmVPmuDIhSBbV327yn1CofauPDGLK6d4wy_dgXPhVQvnNThOA" 
+                                         alt="Dry-Aged Porterhouse" class="product-image">
+                                </div>
+                                <div class="product-info d-flex flex-column h-100">
+                                    <h3 class="product-title mb-2">Dry-Aged Porterhouse</h3>
+                                    <p class="product-description flex-grow-1">
+                                        "Intense rich pieces of porterhouse, master cut bones and marrow."
+                                    </p>
+                                     <!-- Simplified structure for price and button -->
+                                    <div class="d-flex justify-content-between align-items-center pt-3 mt-auto">
+                                        <span class="product-price">$129.00</span>
+                                        <button class="btn add-to-cart-btn">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 5 -->
+                        <article class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                            <div class="product-card h-100">
+                                <div class="overflow-hidden">
+                                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4hZV93_qhQ4Vmp_57IYuFCz7rDZwdkRppe7j0qrJVexaJ1FxdQGu0JMG90Ig71kMRD9AMKGCkshckU9up8RL6VTYcH7Jjm5xGiNXp-9uX-eCRYd5THm6EnLIairnaKXEp6nsGICnvVPHlNZggYvWrEC3nizUog4h9SOZAxyo77R5F-EZBc9LXls_-EFJrmNUxBA1aPpdojfrPJiUdIo8xzpwdK_fvh4cE0GfK8hQ747S4JYS7nY0QfIyxOYgSe9_buNbyqPGoqCM" 
+                                         alt="Chef's Bundles" class="product-image">
+                                </div>
+                                <div class="product-info d-flex flex-column h-100">
+                                    <h3 class="product-title mb-2">Chef's Bundles</h3>
+                                    <p class="product-description flex-grow-1">
+                                        "The king of meat taste, subtle, elegant, and perfectly seasoned."
+                                    </p>
+                                     <!-- Simplified structure for price and button -->
+                                    <div class="d-flex justify-content-between align-items-center pt-3 mt-auto">
+                                        <span class="product-price">$139.00</span>
+                                        <button class="btn add-to-cart-btn">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 6 -->
+                        <article class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                            <div class="product-card h-100">
+                                <div class="overflow-hidden">
+                                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb-DYCnJZvqJLzFN9kuqwqrQ7AKLjbxh5J4D2IPb-Su4jna-DyVWlXOwgfVA_ZiKHYg_xkq7i0QCQrsmy2R9MEw8-BY8u3yetzAk--DylkfN3G8Pnqv8vd-Se25CgO-ysUH6B_due0mX1I_Tb8Hoop5Ck1pNDedOb_nSNzE7LmdsIXmJv9hft5XmKwwhLdXxcnNycFsA0jK9fBzgZVlNlIZpvDr0oGMioZpyMiEkoTTk5Xt4xJ20zLS9AirLHeHIKTltI7cagCg48" 
+                                         alt="Reserve Filet" class="product-image">
+                                </div>
+                                <div class="product-info d-flex flex-column h-100">
+                                    <h3 class="product-title mb-2">Reserve Filet</h3>
+                                    <p class="product-description flex-grow-1">
+                                        "Intense buttered cotton soft action, mild, mineral texture."
+                                    </p>
+                                     <!-- Simplified structure for price and button -->
+                                    <div class="d-flex justify-content-between align-items-center pt-3 mt-auto">
+                                        <span class="product-price">$139.00</span>
+                                        <button class="btn add-to-cart-btn">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="pt-5 pb-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 mb-4 mb-lg-0" data-aos="fade-up">
+                    <h4 class="text-accent mb-3">ButcherShop</h4>
+                    <p class="small text-light opacity-50">Preserving the traditional craft of the artisan butcher with modern culinary innovation. Sourced from single-origin farms dedicated to sustainable practices.</p>
+                </div>
+                <div class="col-6 col-lg-2" data-aos="fade-up" data-aos-delay="100">
+                    <h6 class="text-uppercase mb-3 text-white">Heritage</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Provenance</a></li>
+                        <li class="mb-2"><a href="#">Our Artisans</a></li>
+                        <li class="mb-2"><a href="#">Ethics</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2" data-aos="fade-up" data-aos-delay="200">
+                    <h6 class="text-uppercase mb-3 text-white">Concierge</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Shipping</a></li>
+                        <li class="mb-2"><a href="#">Gift Cards</a></li>
+                        <li class="mb-2"><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2" data-aos="fade-up" data-aos-delay="300">
+                    <h6 class="text-uppercase mb-3 text-white">Social</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Instagram</a></li>
+                        <li class="mb-2"><a href="#">Journal</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2" data-aos="fade-up" data-aos-delay="400">
+                    <h6 class="text-uppercase mb-3 text-white">Legal</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Privacy</a></li>
+                        <li class="mb-2"><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="text-center small text-light opacity-50">
+                &copy; 2026 ButcherShop. Crafted for the Connoisseur.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize Animate On Scroll
+        AOS.init({
+            once: false, // Animation happens only once while scrolling down
+            offset: 100, // Offset (in px) from the original trigger point
+            duration: 800, // Duration of animation
+            easing: 'ease-out-cubic',
+        });
+
+        /*added for curated collections auto tab switching */
+        // --- Auto-Rotating Tabs Logic ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('#collectionTabs .btn-tab-custom');
+            let currentIndex = 0;
+            let autoRotateInterval;
+            const rotateDelay = 5000; // Time in milliseconds (5 seconds)
+
+            // Function to start or restart the auto-rotation
+            function startAutoRotate() {
+                clearInterval(autoRotateInterval); // Clear any existing timer
+                autoRotateInterval = setInterval(() => {
+                    // Calculate the next index, looping back to 0 if at the end
+                    currentIndex = (currentIndex + 1) % tabButtons.length;
+                    
+                    // Use Bootstrap's Tab API to show the next tab
+                    const nextTab = new bootstrap.Tab(tabButtons[currentIndex]);
+                    nextTab.show();
+                }, rotateDelay);
+            }
+
+            // Start the auto-rotation on page load
+            startAutoRotate();
+
+            // Reset the timer whenever a user manually clicks a tab
+            tabButtons.forEach((button, index) => {
+                button.addEventListener('click', function() {
+                    currentIndex = index; // Update current index to the clicked tab
+                    startAutoRotate();    // Restart the 5-second timer
+                });
+            });
+
+            // UX Enhancement: Pause auto-rotation when hovering over the section
+            const collectionsSection = document.getElementById('collections');
+            if (collectionsSection) {
+                collectionsSection.addEventListener('mouseenter', () => {
+                    clearInterval(autoRotateInterval); // Pause
+                });
+                collectionsSection.addEventListener('mouseleave', () => {
+                    startAutoRotate(); // Resume
+                });
+            }
+        });
+        /*End of curated collections auto tab switching */
+
+
+        // Mobile menu toggle functionality
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+        });
+
+        // Function to initialize tooltips
+        function enableTooltips() {
+            // Select all elements with the data-bs-toggle="tooltip" attribute
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            // Create a new Tooltip instance for each selected element
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    // Optional: Configure tooltip behavior
+                    trigger: 'hover' // Default is 'hover focus', you can change if needed
+                    // Explicitly set container for tooltips to avoid z-index issues if needed
+                    // container: 'body'
+                });
+            });
+        }
+
+        // Call the function to enable tooltips once the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', enableTooltips);
+
+    </script>
+</body>
+</html>

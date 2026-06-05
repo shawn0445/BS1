@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - ButcherShop</title>
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bs-body-bg: #0a0a0a;
+            --bs-body-color: #e0e0e0;
+            --accent-color: #8B0000; /* Deep Butcher Red */
+            --accent-hover: #660000;
+            --overlay-dark: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3) 100%);
+            --overlay-center: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85));
+            --overlay-heavy: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
+            /* Background for Contact Section */
+            --contact-bg: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            overflow-x: hidden;
+            padding-left: 64px; /* Match sidebar width */
+        }
+
+        h1, h2, h3, h4, h5, .navbar-brand {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .text-accent { color: var(--accent-color) !important; }
+        
+        /* Buttons */
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: #fff;
+            font-weight: 600;
+            border: 1px solid var(--accent-color);
+            padding: 12px 32px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .btn-outline-accent {
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-weight: 600;
+            padding: 12px 32px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+        .btn-outline-accent:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* Sidebar & Nav Styles (Copied from main page for consistency) */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 64px;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(139, 0, 0, 0.2);
+            z-index: 1000;
+            padding: 2rem 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sidebar-logo {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(139,0,0,0.4);
+            border-radius: 50%;
+            color: #ff4d4d;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+        .sidebar-nav .nav-item { margin-bottom: 0.5rem; text-align: center; }
+        .sidebar-nav .nav-link {
+            color: #ccc !important;
+            padding: 1rem 0;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 70px;
+        }
+        .sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.active {
+            color: var(--accent-color) !important;
+            background-color: rgba(139, 0, 0, 0.15);
+        }
+        .sidebar-nav .nav-link i { font-size: 1.4rem; margin-bottom: 0.3rem; }
+
+        /* Top Navbar */
+        .top-navbar {
+            background-color: rgba(10, 10, 10, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+            padding: 1rem 0;
+            top: 0;
+            z-index: 1040;
+        }
+        /* Updated top navbar link styles to match index.html */
+        .top-navbar .nav-link {
+            color: #ccc !important;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+            text-decoration: none; /* Ensure no default underline */
+        }
+        .top-navbar .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+        .top-navbar .nav-link.active {
+            color: var(--accent-color) !important;
+        }
+
+        /* Contact Section Background */
+        .contact-section-bg {
+            background: var(--contact-bg);
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 6rem 0; /* Adjust padding as needed */
+        }
+
+        /* Contact Info Card */
+        .contact-info-card {
+            background-color: rgba(17, 17, 17, 0.95); /* Semi-transparent dark bg */
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Contact Form Card */
+        .contact-form-card {
+            background-color: rgba(17, 17, 17, 0.95); /* Semi-transparent dark bg */
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Map Container */
+        .map-container {
+            background-color: rgba(17, 17, 17, 0.95);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-radius: 4px;
+            height: 400px; /* Fixed height */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Support Links Card */
+        .support-links-card {
+            background-color: rgba(17, 17, 17, 0.95);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #050505;
+            border-top: 1px solid rgba(139, 0, 0, 0.2);
+        }
+        footer a { color: #888; text-decoration: none; transition: all 0.3s ease; }
+        footer a:hover { color: var(--accent-color); padding-left: 5px; }
+
+        @media (max-width: 991.98px) {
+            body { padding-left: 0; }
+            .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+            .sidebar.show { transform: translateX(0); }
+            .mobile-menu-toggle { position: fixed; top: 1rem; left: 1rem; z-index: 1050; display: block; }
+        }
+        .mobile-menu-toggle { display: none; }
+
+        /* --- Tooltip Override Styles --- */
+        /* Target the main tooltip element */
+        .tooltip {
+            --bs-tooltip-bg: #212529; /* Dark background for the tooltip */
+            --bs-tooltip-color: #e0e0e0; /* Light text color matching your theme */
+            /* Adjust other properties if needed */
+            opacity: 0.95; /* Example: slightly less transparent */
+        }
+
+        /* Specifically target the tooltip inner content */
+        .tooltip .tooltip-inner {
+            background-color: var(--bs-tooltip-bg);
+            color: var(--bs-tooltip-color);
+            border-radius: 4px; /* Or keep Bootstrap's default */
+            padding: 6px 12px;  /* Or keep Bootstrap's default */
+            font-size: 0.875rem; /* Adjust size if needed */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional subtle shadow */
+        }
+
+        /* Optionally, target the arrow if visibility is also an issue */
+        .tooltip .tooltip-arrow::before {
+            border-top-color: var(--bs-tooltip-bg); /* For top placement */
+            border-bottom-color: var(--bs-tooltip-bg); /* For bottom placement */
+            border-left-color: var(--bs-tooltip-bg); /* For left placement */
+            border-right-color: var(--bs-tooltip-bg); /* For right placement */
+        }
+        /* --- End Tooltip Override Styles --- */
+
+        /* Specific style for the email paragraph to prevent overflow */
+        .email-address {
+            overflow-wrap: break-word; /* Forces wrapping of long strings */
+            word-break: break-word; /* Alternative/additional instruction */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle btn btn-accent d-md-none" id="mobileMenuToggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-logo">BS</div>
+        <ul class="nav flex-column sidebar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html" data-bs-toggle="tooltip" data-bs-placement="right" title="Return to Homepage"><i class="bi bi-house"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="cutting-room.html" data-bs-toggle="tooltip" data-bs-placement="right" title="Master cooking techniques"><i class="bi bi-book"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="aboutus.html" data-bs-toggle="tooltip" data-bs-placement="right" title="Learn about our history and heritage"><i class="bi bi-info-circle"></i></a></li>
+            <li class="nav-item"><a class="nav-link active" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Get in touch with us"><i class="bi bi-envelope"></i></a></li>
+        </ul>
+    </nav>
+
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark top-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="text-accent">BS</span> <span class="text-white">ButcherShop</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="topNavbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="shop.html">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cutting-room.html">The Cutting Room</a></li>
+                    <li class="nav-item"><a class="nav-link" href="aboutus.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Contact Us</a></li>
+                </ul>
+                <a href="shop.html" class="btn btn-accent btn-sm">Shop Online</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="pt-5">
+        <!-- BEGIN: ContactSection -->
+        <section class="py-5 contact-section-bg">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-12 text-center mb-5" data-aos="fade-up">
+                        <h1 class="display-3 fw-bold text-white">Contact <span class="text-accent">Us</span></h1>
+                    </div>
+                </div>
+                <div class="row g-5">
+                    <!-- Contact Information Column -->
+                    <div class="col-lg-6" data-aos="fade-right">
+                        <div class="contact-info-card h-100">
+                            <h2 class="text-3xl text-accent mb-4 fw-bold fs-2">Contact Information</h2>
+                            <div class="space-y-4">
+                                <div class="d-flex align-items-start">
+                                    <span class="text-accent me-3 mt-1">
+                                        <i class="bi bi-geo-alt fs-4"></i>
+                                    </span>
+                                    <p class="text-light lead mb-0">123 Artisanal St, Meatpacking<br/>District, NY 10014</p>
+                                </div>
+                                <div class="pt-4 d-flex align-items-start">
+                                    <span class="text-accent me-3 mt-1">
+                                        <i class="bi bi-telephone fs-4"></i>
+                                    </span>
+                                    <p class="text-light lead mb-0">(212) 555-0198</p>
+                                </div>
+                                <div class="pt-4 d-flex align-items-start">
+                                    <span class="text-accent me-3 mt-1">
+                                        <i class="bi bi-envelope fs-4"></i>
+                                    </span>
+                                    <p class="text-light lead mb-0 email-address">contact@butchershop.com</p> <!-- Added text-wrap class -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Send Message Column -->
+                    <div class="col-lg-6" data-aos="fade-left">
+                        <div class="contact-form-card h-100">
+                            <h2 class="text-3xl text-accent mb-4 fw-bold fs-2">Send Message</h2>
+                            <form class="space-y-4">
+                                <div>
+                                    <input class="form-control bg-dark text-light border-secondary" placeholder="Name" required="" type="text"/>
+                                </div>
+                                <div>
+                                    <input class="form-control bg-dark text-light border-secondary" placeholder="Email" required="" type="email"/>
+                                </div>
+                                <div>
+                                    <input class="form-control bg-dark text-light border-secondary" placeholder="Subject" type="text"/>
+                                </div>
+                                <div>
+                                    <textarea class="form-control bg-dark text-light border-secondary" placeholder="Message" rows="6"></textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-accent w-100 py-3" type="submit">
+                                        Send Message
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: ContactSection -->
+
+        <!-- BEGIN: MapSection -->
+        <section class="py-5">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-12" data-aos="fade-up">
+                        <h2 class="text-3xl text-accent mb-4 text-center fw-bolder fs-2">Find Us</h2>
+                        <div class="map-container rounded">
+                            <!-- Placeholder for map -->
+                            <div class="w-100 h-100 bg-secondary d-flex align-items-center justify-content-center">
+                                <p class="text-light">Map Integration Goes Here</p>
+                            </div>
+                            <!-- Pin Marker Placeholder -->
+                            <div class="position-absolute top-50 start-50 translate-middle">
+                                <i class="bi bi-geo-alt-fill text-accent" style="font-size: 2rem; text-shadow: 0 0 10px rgba(0,0,0,0.5);"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: MapSection -->
+
+        <!-- BEGIN: SupportSection -->
+        <section class="py-5" style="background-color: rgba(139, 0, 0, 0.05);"> <!-- Light red tint background -->
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-12" data-aos="fade-up">
+                        <div class="support-links-card">
+                            <h2 class="text-4xl text-accent mb-4 fw-bolder fs-2">Support</h2>
+                            <ul class="list-unstyled text-light">
+                                <li class="mb-3"><a class="text-light link-offset-2 link-underline link-underline-opacity-25 link-underline-opacity-75-hover" href="#">Frequently Asked Questions</a></li>
+                                <li class="mb-3"><a class="text-light link-offset-2 link-underline link-underline-opacity-25 link-underline-opacity-75-hover" href="#">Shipping Policy</a></li>
+                                <li class="mb-3"><a class="text-light link-offset-2 link-underline link-underline-opacity-25 link-underline-opacity-75-hover" href="#">Returns</a></li>
+                                <li class="mb-3"><a class="text-light link-offset-2 link-underline link-underline-opacity-25 link-underline-opacity-75-hover" href="#">Formsava Service</a></li>
+                                <li class="mb-3"><a class="text-light link-offset-2 link-underline link-underline-opacity-25 link-underline-opacity-75-hover" href="#">Contact Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: SupportSection -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="pt-5 pb-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h4 class="text-accent mb-3">ButcherShop</h4>
+                    <p class="small text-light opacity-50">Preserving the traditional craft of the artisan butcher with modern culinary innovation. Sourced from single-origin farms dedicated to sustainable practices.</p>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-uppercase mb-3 text-white">Heritage</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Provenance</a></li>
+                        <li class="mb-2"><a href="#">Our Artisans</a></li>
+                        <li class="mb-2"><a href="#">Ethics</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-uppercase mb-3 text-white">Concierge</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Shipping</a></li>
+                        <li class="mb-2"><a href="#">Gift Cards</a></li>
+                        <li class="mb-2"><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-uppercase mb-3 text-white">Social</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Instagram</a></li>
+                        <li class="mb-2"><a href="#">Journal</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-uppercase mb-3 text-white">Legal</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Privacy</a></li>
+                        <li class="mb-2"><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="text-center small text-light opacity-50">
+                &copy; 2026 ButcherShop. Crafted for the Connoisseur.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({ once: true, offset: 100, duration: 800 });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+        });
+
+        // Function to initialize tooltips
+        function enableTooltips() {
+            // Select all elements with the data-bs-toggle="tooltip" attribute
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            // Create a new Tooltip instance for each selected element
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    // Optional: Configure tooltip behavior
+                    trigger: 'hover' // Default is 'hover focus', you can change if needed
+                });
+            });
+        }
+
+        // Call the function to enable tooltips once the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', enableTooltips);
+
+    </script>
+</body>
+</html>

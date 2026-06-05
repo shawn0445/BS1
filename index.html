@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ButcherShop | The Art of Filet</title>
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bs-body-bg: #0a0a0a;
+            --bs-body-color: #e0e0e0;
+            --accent-color: #8B0000; /* Deep Butcher Red */
+            --accent-hover: #660000;
+            --overlay-dark: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3) 100%);
+            --overlay-center: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85));
+            --overlay-heavy: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            overflow-x: hidden;
+            padding-left: 64px; /* Make space for the thin sidebar */
+        }
+
+        h1, h2, h3, h4, h5, .navbar-brand {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .text-accent { color: var(--accent-color) !important; }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: #fff;
+            font-weight: 600;
+            border: 1px solid var(--accent-color);
+            padding: 12px 32px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .btn-outline-accent {
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-weight: 600;
+            padding: 12px 32px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+        .btn-outline-accent:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* Top Navigation Bar */
+        .top-navbar {
+            background-color: rgba(10, 10, 10, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+            padding: 1rem 0;
+            /* position: sticky; */
+            /* position: fixed; */
+            top: 0;
+            z-index: 1040;
+        }
+        .top-navbar .navbar-brand {
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .top-navbar .nav-link {
+            color: #ccc !important;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        .top-navbar .nav-link:hover, .top-navbar .nav-link.active {
+            color: var(--accent-color) !important;
+        }
+
+        /* Thin Vertical Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 64px; /* Thin sidebar */
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(139, 0, 0, 0.2);
+            z-index: 1000;
+            padding: 2rem 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        .sidebar .vertical-brand {
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            color: #e0e0e0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            white-space: nowrap;
+            transform: rotate(180deg); /* Rotate to read top-to-bottom */
+            text-align: center;
+        }
+        
+        .sidebar .vertical-brand span.text-accent {
+            color: var(--accent-color);
+        }
+        
+        .sidebar-nav {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .sidebar-nav .nav-item {
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .sidebar-nav .nav-link {
+            color: #ccc !important;
+            font-weight: 500;
+            padding: 1rem 0;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 70px;
+        }
+        
+        .sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.active {
+            color: var(--accent-color) !important;
+            background-color: rgba(139, 0, 0, 0.15);
+        }
+        
+        .sidebar-nav .nav-link i {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .sidebar-nav .nav-link span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(139, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .sidebar-footer .btn {
+            padding: 0.75rem 0.5rem;
+            width: 100%;
+        }
+
+        .sidebar-logo {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(139,0,0,0.4);
+
+            border-radius: 50%;
+
+            color: #ff4d4d;
+
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+
+            margin-bottom: 3rem;
+        }
+
+        /* Hero Section with Background Image */
+        .hero-section {
+            background: var(--overlay-dark), url('https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            text-align: left !important; /* Strictly left aligned */
+            padding-left: 5%;
+        }
+        .hero-content h1 {
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.9), 0 0 30px rgba(139, 0, 0, 0.3);
+        }
+        .hero-content h1 {
+            -webkit-text-stroke: 1px rgba(0,0,0,0.5);
+            paint-order: stroke fill;
+        }
+        .hero-content h6 {
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
+        }
+
+        .hero-content h6 {
+            -webkit-text-stroke: 1px rgba(0,0,0,0.5);
+            paint-order: stroke fill;
+        }
+
+        .hero-content p {
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* end of new section */
+
+        .section-bg-img {
+            background: var(--overlay-center), url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=2069&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* Featured Cut Section Background */
+        .featured-cut-section {
+            background: var(--overlay-heavy), url('https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        /* update the featured cut section for more visibility */
+        /* Featured Cut Section Text Enhancements */
+        .featured-cut-section h6 {
+            color: #ffffff !important;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            /* Optional: Adds a premium red "pill" background behind the label */
+            background: rgba(139, 0, 0, 0.85); 
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 4px;
+            margin-bottom: 1rem !important;
+        }
+
+        .featured-cut-section h2 {
+            text-shadow: 0 4px 8px rgba(0,0,0,0.9);
+            font-weight: 700;
+        }
+
+        .featured-cut-section p {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            font-weight: 500;
+        }
+
+        /* Fix for the View Details Button */
+        /* We change it from outline to solid so it's always visible, not just on hover */
+        .btn-view-details {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: 1px solid var(--accent-color);
+            font-weight: 600;
+            padding: 12px 32px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4); /* Adds a subtle red glow */
+        }
+
+        .btn-view-details:hover {
+            background-color: #ffffff;
+            color: var(--accent-color);
+            border-color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        }
+
+
+        /* Curated Collections Section Background */
+        .collections-section {
+            background: var(--overlay-heavy), url('https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .section-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Cards */
+        .collection-card {
+            background-color: rgba(17, 17, 17, 0.95);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .collection-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(139, 0, 0, 0.3);
+            background-color: rgba(139, 0, 0, 0.1);
+        }
+        .collection-card img {
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .collection-card:hover img {
+            transform: scale(1.05);
+            /* transform: scale(1.5); */
+        }
+
+        /* Form */
+        .form-control-custom {
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 14px 20px;
+        }
+        .form-control-custom:focus {
+            background-color: rgba(255,255,255,0.1);
+            border-color: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 0 0 0.25rem rgba(139, 0, 0, 0.25);
+        }
+        /* --- Search Bar Placeholder Fix --- */
+        .form-control-custom::placeholder {
+            color: rgba(255, 255, 255, 0.5) !important; /* A bright, readable light grey/white */
+            opacity: 1; /* Overrides default browser transparency */
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        /* Slightly fade it when the user clicks inside the box to type */
+        .form-control-custom:focus::placeholder {
+            color: rgba(255, 255, 255, 0.2) !important;
+            transition: color 0.3s ease;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #050505;
+            border-top: 1px solid rgba(139, 0, 0, 0.2);
+        }
+        footer a {
+            color: #888;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        footer a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        /*Style code added for curated collections cards, feel free to modify as needed */
+
+        /* --- Tab Navigation Overrides --- */
+        .btn-tab-custom {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            color: #ccc;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-tab-custom:hover {
+            background: rgba(139, 0, 0, 0.2);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+
+        /* Force Red Background and White Text for Active Tab (Overrides Bootstrap Blue) */
+        .btn-tab-custom.active {
+            background: var(--accent-color) !important;
+            border-color: var(--accent-color) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.5);
+        }
+
+        /* --- Text Visibility Enhancements for Tab Content --- */
+
+        /* Make the h6 labels pop with a dark background pill and left border */
+        .tab-content h6.text-accent {
+            color: #ff4d4d !important; /* Slightly brighter red for better visibility */
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.65); /* Dark semi-transparent backing */
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 4px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 1rem !important;
+        }
+
+        /* Enhance list items and checkmarks */
+        .tab-content .list-unstyled li {
+            font-weight: 500;
+            font-size: 1.05rem;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .tab-content .list-unstyled .bi-check2 {
+            color: #ff3333 !important; /* Brighter red for the icon to pop */
+            font-size: 1.2rem;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.9)); /* Ensures tick is visible on any background */
+        }
+
+        /* Ensure paragraph text is highly readable */
+        .tab-content p {
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            font-weight: 400;
+        }
+
+        /* --- Image Hover Zoom Effect --- */
+
+        /* 1. For Featured Cut and Boutique images (.section-img) */
+        .section-img {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth, premium easing */
+        }
+        .section-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* 2. For Collection Tab images (Wrapper approach to keep rounded corners perfect) */
+        .img-zoom-wrapper {
+            overflow: hidden; /* Crucial: keeps the zoomed image inside the container */
+            border-radius: 0.375rem; /* Matches Bootstrap's .rounded class */
+            box-shadow: 0 1rem 3rem rgba(0,0,0,0.5); /* Matches Bootstrap's .shadow-lg */
+        }
+
+        .img-zoom-wrapper img {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .img-zoom-wrapper:hover img {
+            transform: scale(1.05);
+        }
+        /* End of Curated Collections Card Styles */
+
+        /* footer butcher shop text */
+        footer .text-accent {
+            font-weight: 700;
+        }
+
+        /* test html targeting*/
+        /* #profiles .container h2.text-center{ */
+           /* color: #ff3333 !important; /*Brighter, high-contrast red*/ */
+            /* font-weight: bolder; */
+            /* font-family: 'Inter', sans-serif; */
+        /* }  */
+
+        /*Start Signature Profiles section changes*/
+        /* #profiles {
+
+        } */
+        /* Signature Profiles Background & Layout */
+        /* DO NOT REMOVE - Required for browser rendering bug (gradient+image composite) */
+        #profiles { }
+
+        /* Actual styles - second declaration forces proper render */
+        /* =====================================
+        SIGNATURE PROFILES — PREMIUM FIX
+        ===================================== */
+
+        #profiles {
+            position: relative;
+            background: linear-gradient(rgba(10,10,10,0.82), rgba(10,10,10,0.96)),
+                        url("https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=2070&auto=format&fit=crop")
+                        center/cover no-repeat;
+            padding: 90px 0;
+            background-blend-mode: overlay;
+        }
+
+        /* soft vignette depth */
+        #profiles::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center,
+                rgba(0,0,0,0.2),
+                rgba(0,0,0,0.92));
+            pointer-events: none;
+        }
+
+        #profiles .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===============================
+        TITLE IMPROVEMENT
+        ================================ */
+
+        #profiles h2 {
+            font-size: 2.6rem;
+            letter-spacing: 1px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        /* ===============================
+        GRID SPACING FIX
+        ================================ */
+
+        #profiles .row {
+            row-gap: 30px;
+        }
+
+        /* ===============================
+        CARD — LUXURY UPGRADE
+        ================================ */
+
+        /* #profiles .profile-card {
+            height: 100%;
+            padding: 2.4rem 2rem;
+            background: rgba(18, 18, 18, 0.72);
+            border: 1px solid rgba(139, 0, 0, 0.25);
+            border-radius: 16px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+            transition: all 0.45s ease;
+            position: relative;
+            overflow: hidden;
+        } */
+         #profiles .profile-card {
+            background: linear-gradient(
+                145deg,
+                rgba(20, 20, 20, 0.55),
+                rgba(10, 10, 10, 0.35)
+            );
+
+            border: 1px solid rgba(139, 0, 0, 0.18);
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,255,255,0.03);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        #profiles .profile-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background: radial-gradient(
+                circle at top left,
+                rgba(139, 0, 0, 0.08),
+                transparent 60%
+            );
+
+            pointer-events: none;
+        }
+
+        /* top accent line (premium label feel) */
+        #profiles .profile-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg,
+                transparent,
+                var(--accent-color),
+                transparent);
+            opacity: 0.7;
+        }
+
+        /* hover = elevated product card feel */
+        #profiles .profile-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(255, 51, 51, 0.6);
+            box-shadow: 0 25px 60px rgba(139, 0, 0, 0.25);
+            background: rgba(25, 25, 25, 0.85);
+        }
+
+        /* ===============================
+        TEXT FIX (MAJOR DIFFERENCE MAKER)
+        ================================ */
+
+        #profiles .profile-card h5 {
+            font-size: 1.05rem;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            color: #ff4d4d !important;
+        }
+
+        /* replace ugly dot with refined indicator */
+        #profiles .profile-card h5::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 12px rgba(139,0,0,0.6);
+        }
+
+        /* quote styling becomes intentional “tasting note” */
+        #profiles .profile-card p {
+            font-style: italic;
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: rgba(255,255,255,0.78);
+            padding-left: 14px;
+            border-left: 2px solid rgba(139,0,0,0.35);
+            margin-bottom: 0;
+        }
+
+        /* hover improves readability */
+        #profiles .profile-card:hover p {
+            color: rgba(255,255,255,0.92);
+        }
+        /*end of signature profile changes*/
+
+                /* Responsive adjustments */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            
+            body {
+                padding-left: 0;
+            }
+            
+            .mobile-menu-toggle {
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1050;
+                display: block;
+            }
+        }
+        
+        .mobile-menu-toggle {
+            display: none;
+            z-index: 1050;
+        }
+
+        /* --- Tooltip Override Styles --- */
+        /* Target the main tooltip element */
+        .tooltip {
+            --bs-tooltip-bg: #212529; /* Dark background for the tooltip */
+            --bs-tooltip-color: #e0e0e0; /* Light text color matching your theme */
+            /* Adjust other properties if needed */
+            opacity: 0.95; /* Example: slightly less transparent */
+        }
+
+        /* Specifically target the tooltip inner content */
+        .tooltip .tooltip-inner {
+            background-color: var(--bs-tooltip-bg);
+            color: var(--bs-tooltip-color);
+            border-radius: 4px; /* Or keep Bootstrap's default */
+            padding: 6px 12px;  /* Or keep Bootstrap's default */
+            font-size: 0.875rem; /* Adjust size if needed */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional subtle shadow */
+        }
+
+        /* Optionally, target the arrow if visibility is also an issue */
+        .tooltip .tooltip-arrow::before {
+            border-top-color: var(--bs-tooltip-bg); /* For top placement */
+            border-bottom-color: var(--bs-tooltip-bg); /* For bottom placement */
+            border-left-color: var(--bs-tooltip-bg); /* For left placement */
+            border-right-color: var(--bs-tooltip-bg); /* For right placement */
+        }
+        /* --- End Tooltip Override Styles --- */
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-toggle btn btn-accent d-md-none" id="mobileMenuToggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark top-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span class="text-accent">BS</span> <span class="text-white">ButcherShop</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="topNavbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="shop.html">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cutting-room.html">The Cutting Room</a></li>
+                    <li class="nav-item"><a class="nav-link" href="aboutus.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contactus.html">Contact Us</a></li>
+                </ul>
+                <a href="shop.html" class="btn btn-accent btn-sm">Shop Online</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Vertical Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            BS
+        </div>
+        
+        <ul class="nav flex-column sidebar-nav">
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="shop.html"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="right"
+                   title="Browse our curated meat collections">
+                    <i class="bi bi-collection"></i>
+                    <!-- <span>Collections</span> -->
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="cutting-room.html"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="right"
+                   title="Master cooking techniques">
+                    <i class="bi bi-book"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="aboutus.html"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="right"
+                   title="Learn about our history and heritage">
+                    <i class="bi bi-info-circle"></i>
+                    <!-- <span>About</span> -->
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="contactus.html"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="right"
+                   title="Get in touch with us">
+                    <i class="bi bi-envelope"></i>
+                    <!-- <span>Contact</span> -->
+                </a>
+            </li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" class="btn btn-accent">
+                <i class="bi bi-cart"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Left Aligned, Background Image, Animated) -->
+    <header class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 hero-content" data-aos="fade-right" data-aos-duration="1000">
+                    <h6 class="text-accent text-uppercase mb-3" style="letter-spacing: 3px; font-size: 20px; font-weight: bolder;">The Art Of Filet</h6>
+                    <h1 class="display-3 fw-bold mb-4 text-white">Gourmet <span class="text-accent">Reimagined.</span></h1>
+                    <p class="lead mb-5 text-light opacity-75" style="max-width: 600px;">
+                        Experience a new era of culinary excellence. Masterfully aged, precision cut, and ethically sourced for the true connoisseur.
+                    </p>
+                    <a href="#collections" class="btn btn-accent btn-lg">Start Your Journey</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Featured Cut Section (Background Image, Animated) -->
+    <section class="featured-cut-section py-5">
+        <div class="container py-5">
+            <div class="row align-items-center flex-column-reverse flex-lg-row">
+                <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-right" data-aos-duration="1000">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpDuM_4QIRrNTkYyBwyYjpZtjp1w4ZzIs20L-LqsTRnG8Dw4Z1y5JspDKdIvHGfeCLAaI3pP14PjkafJQVZd3MC2Cy43Wnfk4sx0PmzDX4E3xZZXaTG5ivcBkCqKmD0OdKTTR9ov49wfU82eUQK_DXrsa1-Lpfy2K733FL8Y9G1IYPzclRhvb8HkjerMZcBz44hW17Jo_5u7Mb4PEzp9JFwXZMtkzy4FxS4mKyAgJ_GLrmyDaoSAT_S7KKxhDpajEidlRqzPRCP6g" 
+                         alt="A5 Wagyu Ribeye" class="section-img">
+                </div>
+                <div class="col-lg-6 px-lg-5" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <!-- <h6 class="text-accent text-uppercase mb-2" style="letter-spacing: 2px;">Featured Cut</h6>
+                      -->
+                    <h6 class="text-uppercase">Featured Cut</h6>
+                    <h2 class="display-5 mb-4 text-white">A5 Wagyu Ribeye</h2>
+                    <p class="fst-italic text-light opacity-75 mb-4 fs-5">"The pinnacle of marbling and depth for your metallic lure."</p>
+                    <!-- <a href="#" class="btn btn-outline-accent">View Details</a> -->
+                    <a href="#" class="btn btn-view-details">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legacy of Aging (Background Image, Animated) -->
+    <section id="legacy" class="section-bg-img py-5 text-center">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up" data-aos-duration="1000">
+                    <h2 class="display-5 mb-4 text-white">A Legacy of Aging</h2>
+                    <p class="lead text-light opacity-75 mb-5">Discover the time-honored tradition of dry-aging, where patience and precision transform our cuts into masterpieces of flavor and texture.</p>
+                    <a href="#" class="btn btn-accent btn-lg">Learn About Our Process</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curated Collections (Background Image, Animated Cards) -->
+    <section id="collections" class="collections-section py-5">
+        <div class="container py-5">
+            <h2 class="text-center mb-5 text-white" data-aos="fade-up">Curated Collections</h2>
+            
+            <!-- Tabs Navigation -->
+            <ul class="nav nav-pills justify-content-center mb-5" id="collectionTabs" role="tablist">
+                <li class="nav-item mx-2" role="presentation">
+                    <button class="nav-link active btn-tab-custom" data-bs-toggle="pill" data-bs-target="#wagyu" type="button">
+                        <i class="bi bi-star-fill me-2"></i>Wagyu Selections
+                    </button>
+                </li>
+                <li class="nav-item mx-2" role="presentation">
+                    <button class="nav-link btn-tab-custom" data-bs-toggle="pill" data-bs-target="#dryaged" type="button">
+                        <i class="bi bi-clock-history me-2"></i>Dry-Aged Specialties
+                    </button>
+                </li>
+                <li class="nav-item mx-2" role="presentation">
+                    <button class="nav-link btn-tab-custom" data-bs-toggle="pill" data-bs-target="#bundles" type="button">
+                        <i class="bi bi-box-seam me-2"></i>Chef's Bundles
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="collectionTabsContent">
+                <!-- Wagyu Tab -->
+                <div class="tab-pane fade show active" id="wagyu" role="tabpanel">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6" data-aos="fade-right">
+                            <!-- Wrap the image in the zoom container -->
+                            <div class="img-zoom-wrapper">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwMB6leAtFjPriKxU1eh1wWi8MA8mOzS8qpvNrp8l51bJiHXVANO8bVFSrTuzDbRtFtccODH7icx34cmZGCJg6ldYSvmL1dcoPneBmTYeb8dW7_NfbueSWASomu7cHoRJN4-cP8kURlgNjMELWaMD-3iZvOZL5jNQd4yYMdtIH-Qikq981SejucAczJMJIA5pN2sCxwlWq__dEi_Sl0IlgJ--BXR7KJ-1aGbLStstYnNDhU3zZ_PHJ6LApcQ2Zn82z-A26rOmBiEo" 
+                                    alt="Wagyu Selections" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 p-5" data-aos="fade-left">
+                            <h6 class="text-accent text-uppercase mb-2">Premium Grade</h6>
+                            <h3 class="display-5 text-white mb-4">Wagyu Selections</h3>
+                            <p class="text-light opacity-75 mb-4">Experience the world's most sought-after beef. Our Wagyu collection features A5 graded cattle with exceptional marbling scores and unmatched tenderness that melts on your palate.</p>
+                            <ul class="list-unstyled text-light mb-4">
+                                <li class="mb-2"><i class="bi bi-check2 text-accent me-2"></i>A5 Japanese Wagyu</li>
+                                <li class="mb-2"><i class="bi bi-check2 text-accent me-2"></i>BMS 8-12 Marbling</li>
+                                <li class="mb-2"><i class="bi bi-check2 text-accent me-2"></i>Grass & Grain Fed</li>
+                            </ul>
+                            <a href="#" class="btn btn-accent">Explore Wagyu</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dry-Aged Tab -->
+                <div class="tab-pane fade" id="dryaged" role="tabpanel">
+                    <div class="row align-items-center flex-row-reverse">
+                        <div class="col-lg-6" data-aos="fade-left">
+                            <!-- Wrap the image in the zoom container -->
+                            <div class="img-zoom-wrapper">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf297G0b9wo5v5EtCsrWI-7Oi8Ptjou9kCGn4Z17aCw1b7nOcRO9_SlLnGQ8jLOMXFq96YuYFHbuwWtV009YWgjnTNMYw4R8RaxZR2vA7RXB-7knFQNFqs_OKKRfv9dWwCj5Ph-CZ3m3yMXGzS4w7-SFN6Usf-yE2EEJcCK0qE4p1XgmoHPcsZr3edetCCW98qhNhiBa-0lzEhVTxs70AMBEjW2S0vpJMEudo3Ic2JjepUqoVktT-cKSvnCMluRKfuRbn3Ymoadf0" 
+                                    alt="Dry-Aged Specialties" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 p-5" data-aos="fade-right">
+                            <h6 class="text-accent text-uppercase mb-2">Aged 45+ Days</h6>
+                            <h3 class="display-5 text-white mb-4">Dry-Aged Specialties</h3>
+                            <p class="text-light opacity-75 mb-4">Aged to perfection in our climate-controlled aging rooms. Each cut develops intense, nutty flavors and butter-soft texture through our meticulous 45-day aging process.</p>
+                            <ul class="list-unstyled text-light mb-4">
+                                <li class="mb-2"><i class="bi bi-check2 text-accent me-2"></i>28-60 Day Aging</li>
+                                <li class="mb-2"><i class="bi bi-check2 text-accent me-2"></i>Controlled Humidity</li>
+                                <li class="mb-2"><i class="bi bi-check2 text-accent me-2"></i>Enhanced Flavor Profile</li>
+                            </ul>
+                            <a href="#" class="btn btn-accent">Explore Dry-Aged</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bundles Tab -->
+                <div class="tab-pane fade" id="bundles" role="tabpanel">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6" data-aos="fade-right">
+                            <!-- Wrap the image in the zoom container -->
+                            <div class="img-zoom-wrapper">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHtUs2mJLymA0kHp8i70FSXauFacQEG5R9vstdxf3KPIZngm9aq0XX4evP0O0HdHOEYhnzuA_XnjxjDp1K4WeJ5Vm6SHkHN4WHmjPDVk1s5z2wQVEc0IaR0CiRA6IpK0rVbB9UlGP0-B3JMV48fEK4NI0C7xaOiCXSqWSqlb9AKtfDCjEZflbbpILFK9rJVHaSyGfUuRzz6hdhyRNQmzuQZ4MO_sLKXsowTURqkIt4X4YIAIkLkBO3gTXqC-1AJ2FrHmfn1mUog9s" 
+                                alt="Chef's Bundles" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 p-5" data-aos="fade-left">
+                            <h6 class="text-accent text-uppercase mb-2">Curated Sets</h6>
+                            <h3 class="display-5 text-white mb-4">Chef's Bundles</h3>
+                            <p class="text-light opacity-75 mb-4">Hand-selected combinations crafted by our master butchers. Perfect for dinner parties, special occasions, or stocking your freezer with premium cuts tailored to your needs.</p>
+                            <ul class="list-unstyled text-light mb-4">
+                                <li class="mb-2"><i class="bi bi-check2 text-accent me-2"></i>Customizable Options</li>
+                                <li class="mb-2"><i class="bi bi-check2 text-accent me-2"></i>Value Pricing</li>
+                                <li class="mb-2"><i class="bi bi-check2 text-accent me-2"></i>Free Shipping</li>
+                            </ul>
+                            <a href="#" class="btn btn-accent">Explore Bundles</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Find Your Boutique (Left Aligned, Background Image, Animated) -->
+    <section id="boutique" class="section-bg-img py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right" data-aos-duration="1000">
+                    <h2 class="display-5 mb-4 text-white">Find Your Boutique</h2>
+                    <p class="text-light opacity-75 mb-4 fs-5" style="max-width: 500px;">Preserving the traditional craft of the artisan butcher which embraces certain origin innovation, and naturally, dedicated to our practices.</p>
+                    <div class="input-group mb-3" style="max-width: 450px;">
+                        <input type="text" class="form-control form-control-custom" placeholder="Enter your city or zip code" aria-label="Search">
+                        <button class="btn btn-accent" type="button">Locate Nearest</button>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8NnHJpFhbh6Gved6OZDcdexAekM17VrTSO6B6o48CH4_0GFykOjVtkMyDPjwClkOHSLllLF14eJKHWlCLIUykMO8XXI6w5aVuTfE1NTOgL8VDG8mZIcZX2_UPfVkl05nNadPV3M3gYwveYeBhhgrId8udMCTmv_eS_afrN4GMbrRcvXAK5uRM4QWUG2IXDBJRpvikvWaI3Zv_WjLRZnx-FzeUIqQMcjHDDnTuAW66BX9s_S99ebgXhXg8pPj_12L4IzdQfFfo534" 
+                         alt="Butcher Boutique" class="section-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Profiles (Animated) -->
+         <!-- Signature Profiles (Background Image, Cards, Zoom) -->
+    <section id="profiles" class="signature-profiles py-5">
+        <div class="container py-5">
+            <h2 class="text-center mb-5 text-white" data-aos="fade-up">Signature Profiles</h2>
+            <div class="row g-4">
+                <!-- Card 1 -->
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="profile-card">
+                        <h5 class="text-accent mb-0">Wagyu A5</h5>
+                        <p class="small text-light opacity-75 mb-0 mt-3">"Buttery umami-rich, delicate marbling that melts instantly."</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="profile-card">
+                        <h5 class="text-accent mb-0">Dry Aged Ribeye</h5>
+                        <p class="small text-light opacity-75 mb-0 mt-3">"Intense nutty profiles with a distinct blue-cheese finish."</p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="profile-card">
+                        <h5 class="text-accent mb-0">Filet Mignon</h5>
+                        <p class="small text-light opacity-75 mb-0 mt-3">"Unmatched tenderness with a clean, mineral aftertaste."</p>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="profile-card">
+                        <h5 class="text-accent mb-0">Chateaubriand</h5>
+                        <p class="small text-light opacity-75 mb-0 mt-3">"The king of roasts: subtle, elegant, and perfectly uniform."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="pt-5 pb-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 mb-4 mb-lg-0" data-aos="fade-up">
+                    <h4 class="text-accent mb-3">ButcherShop</h4>
+                    <p class="small text-light opacity-50">Preserving the traditional craft of the artisan butcher with modern culinary innovation. Sourced from single-origin farms dedicated to sustainable practices.</p>
+                </div>
+                <div class="col-6 col-lg-2" data-aos="fade-up" data-aos-delay="100">
+                    <h6 class="text-uppercase mb-3 text-white">Heritage</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Provenance</a></li>
+                        <li class="mb-2"><a href="#">Our Artisans</a></li>
+                        <li class="mb-2"><a href="#">Ethics</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2" data-aos="fade-up" data-aos-delay="200">
+                    <h6 class="text-uppercase mb-3 text-white">Concierge</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Shipping</a></li>
+                        <li class="mb-2"><a href="#">Gift Cards</a></li>
+                        <li class="mb-2"><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2" data-aos="fade-up" data-aos-delay="300">
+                    <h6 class="text-uppercase mb-3 text-white">Social</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Instagram</a></li>
+                        <li class="mb-2"><a href="#">Journal</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2" data-aos="fade-up" data-aos-delay="400">
+                    <h6 class="text-uppercase mb-3 text-white">Legal</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Privacy</a></li>
+                        <li class="mb-2"><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="text-center small text-light opacity-50">
+                &copy; 2026 ButcherShop. Crafted for the Connoisseur.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize Animate On Scroll
+        AOS.init({
+            once: false, // Animation happens only once while scrolling down
+            offset: 100, // Offset (in px) from the original trigger point
+            duration: 800, // Duration of animation
+            easing: 'ease-out-cubic',
+        });
+
+        /*added for curated collections auto tab switching */
+        // --- Auto-Rotating Tabs Logic ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('#collectionTabs .btn-tab-custom');
+            let currentIndex = 0;
+            let autoRotateInterval;
+            const rotateDelay = 5000; // Time in milliseconds (5 seconds)
+
+            // Function to start or restart the auto-rotation
+            function startAutoRotate() {
+                clearInterval(autoRotateInterval); // Clear any existing timer
+                autoRotateInterval = setInterval(() => {
+                    // Calculate the next index, looping back to 0 if at the end
+                    currentIndex = (currentIndex + 1) % tabButtons.length;
+                    
+                    // Use Bootstrap's Tab API to show the next tab
+                    const nextTab = new bootstrap.Tab(tabButtons[currentIndex]);
+                    nextTab.show();
+                }, rotateDelay);
+            }
+
+            // Start the auto-rotation on page load
+            startAutoRotate();
+
+            // Reset the timer whenever a user manually clicks a tab
+            tabButtons.forEach((button, index) => {
+                button.addEventListener('click', function() {
+                    currentIndex = index; // Update current index to the clicked tab
+                    startAutoRotate();    // Restart the 5-second timer
+                });
+            });
+
+            // UX Enhancement: Pause auto-rotation when hovering over the section
+            const collectionsSection = document.getElementById('collections');
+            if (collectionsSection) {
+                collectionsSection.addEventListener('mouseenter', () => {
+                    clearInterval(autoRotateInterval); // Pause
+                });
+                collectionsSection.addEventListener('mouseleave', () => {
+                    startAutoRotate(); // Resume
+                });
+            }
+        });
+        /*End of curated collections auto tab switching */
+
+        // Mobile menu toggle functionality
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+        });
+
+        // Function to initialize tooltips
+        function enableTooltips() {
+            // Select all elements with the data-bs-toggle="tooltip" attribute
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            // Create a new Tooltip instance for each selected element
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    // Optional: Configure tooltip behavior
+                    trigger: 'hover' // Default is 'hover focus', you can change if needed
+                });
+            });
+        }
+
+        // Call the function to enable tooltips once the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', enableTooltips);
+    </script>
+</body>
+</html>

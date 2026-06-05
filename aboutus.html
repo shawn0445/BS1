@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ButcherShop - About Us</title>
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bs-body-bg: #0a0a0a;
+            --bs-body-color: #e0e0e0;
+            --accent-color: #8B0000; /* Deep Butcher Red */
+            --accent-hover: #660000;
+            --overlay-dark: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3) 100%);
+            --overlay-center: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85));
+            --overlay-heavy: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
+            /* New Backgrounds for Sections */
+            --legacy-bg: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            --values-bg: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1606787366850-de6330128bfc?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            --team-bg: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            overflow-x: hidden;
+            padding-left: 64px; /* Match sidebar width */
+        }
+
+        h1, h2, h3, h4, h5, .navbar-brand {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .text-accent { color: var(--accent-color) !important; }
+        
+        /* Buttons */
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: #fff;
+            font-weight: 600;
+            border: 1px solid var(--accent-color);
+            padding: 12px 32px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .btn-outline-accent {
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-weight: 600;
+            padding: 12px 32px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+        .btn-outline-accent:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* Sidebar & Nav Styles (Copied from main page for consistency) */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 64px;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(139, 0, 0, 0.2);
+            z-index: 1000;
+            padding: 2rem 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sidebar-logo {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(139,0,0,0.4);
+            border-radius: 50%;
+            color: #ff4d4d;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+        .sidebar-nav .nav-item { margin-bottom: 0.5rem; text-align: center; }
+        .sidebar-nav .nav-link {
+            color: #ccc !important;
+            padding: 1rem 0;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 70px;
+        }
+        .sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.active {
+            color: var(--accent-color) !important;
+            background-color: rgba(139, 0, 0, 0.15);
+        }
+        .sidebar-nav .nav-link i { font-size: 1.4rem; margin-bottom: 0.3rem; }
+
+        /* Top Navbar */
+        .top-navbar {
+            background-color: rgba(10, 10, 10, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+            padding: 1rem 0;
+            top: 0;
+            z-index: 1040;
+        }
+        /* Updated top navbar link styles to match index.html */
+        .top-navbar .nav-link {
+            color: #ccc !important;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+            text-decoration: none; /* Ensure no default underline */
+        }
+        .top-navbar .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+        .top-navbar .nav-link.active {
+            color: var(--accent-color) !important;
+        }
+
+        /* Hero Section (matching index/shop style) */
+        .hero-section {
+            background: var(--overlay-dark), url('https://lh3.googleusercontent.com/aida-public/AB6AXuBTvfXTC7e0OlnEytTEuD2NiX198xkXbHYQJZc1SUE1WumylselIlE9IiUQv66--0bjM2DRXSpX8oalY-cGTlFq79vY78lqU0eASs4XJMqFgJK7mFPNBgRzD83BNU2c0A9r28htfUjHYYzZuKTAfXGCELL_E7ko2sDyaVn0hiIryRcNfDnFvnkMjwuZG4LQX_GccXCqJ7TefWYOkIHG3zthgPErwk3ThrYpM9hSUBTDmDmkWjWPKHE_l5QcbcaSPIhjwsguEmSrDwY') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            text-align: center !important; /* Center align for about page */
+        }
+
+        .hero-content h1 {
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.9), 0 0 30px rgba(139, 0, 0, 0.3);
+            -webkit-text-stroke: 1px rgba(0,0,0,0.5);
+            paint-order: stroke fill;
+        }
+
+        /* Cards */
+        .info-card, .value-card {
+            background-color: rgba(17, 17, 17, 0.95);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .info-card:hover, .value-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.2);
+        }
+
+        .team-member-card {
+            background-color: rgba(17, 17, 17, 0.95);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        .team-member-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.2);
+        }
+        .team-member-img {
+            width: 100%;
+            height: 200px; /* Fixed height for uniformity */
+            object-fit: cover;
+            border-radius: 50%; /* Circular image */
+            border: 4px solid var(--accent-color);
+            transition: all 0.5s ease;
+        }
+        .team-member-card:hover .team-member-img {
+             filter: grayscale(0%); /* Remove grayscale on hover */
+        }
+        .team-member-info {
+            padding: 1rem;
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .team-member-role {
+            color: var(--accent-color);
+            background-color: white;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 0.25rem;
+        }
+
+        /* Specific Section Backgrounds */
+        .legacy-section-bg {
+            background: var(--legacy-bg);
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 6rem 0; /* Adjust padding as needed */
+        }
+
+        .values-section-bg {
+            background: var(--values-bg);
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 6rem 0; /* Adjust padding as needed */
+        }
+
+        .team-section-bg {
+            background: var(--team-bg);
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 6rem 0; /* Adjust padding as needed */
+        }
+
+        /* Container Overlay for Readability */
+        .section-content-overlay {
+            background-color: rgba(10, 10, 10, 0.85); /* Dark semi-transparent overlay */
+            border-radius: 8px; /* Match card radius if desired */
+            padding: 2rem; /* Maintain original padding */
+        }
+
+
+        /* Footer */
+        footer {
+            background-color: #050505;
+            border-top: 1px solid rgba(139, 0, 0, 0.2);
+        }
+        footer a { color: #888; text-decoration: none; transition: all 0.3s ease; }
+        footer a:hover { color: var(--accent-color); padding-left: 5px; }
+
+        @media (max-width: 991.98px) {
+            body { padding-left: 0; }
+            .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+            .sidebar.show { transform: translateX(0); }
+            .mobile-menu-toggle { position: fixed; top: 1rem; left: 1rem; z-index: 1050; display: block; }
+        }
+        .mobile-menu-toggle { display: none; }
+
+        /* --- Tooltip Override Styles --- */
+        /* Target the main tooltip element */
+        .tooltip {
+            --bs-tooltip-bg: #212529; /* Dark background for the tooltip */
+            --bs-tooltip-color: #e0e0e0; /* Light text color matching your theme */
+            /* Adjust other properties if needed */
+            opacity: 0.95; /* Example: slightly less transparent */
+        }
+
+        /* Specifically target the tooltip inner content */
+        .tooltip .tooltip-inner {
+            background-color: var(--bs-tooltip-bg);
+            color: var(--bs-tooltip-color);
+            border-radius: 4px; /* Or keep Bootstrap's default */
+            padding: 6px 12px;  /* Or keep Bootstrap's default */
+            font-size: 0.875rem; /* Adjust size if needed */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional subtle shadow */
+        }
+
+        /* Optionally, target the arrow if visibility is also an issue */
+        .tooltip .tooltip-arrow::before {
+            border-top-color: var(--bs-tooltip-bg); /* For top placement */
+            border-bottom-color: var(--bs-tooltip-bg); /* For bottom placement */
+            border-left-color: var(--bs-tooltip-bg); /* For left placement */
+            border-right-color: var(--bs-tooltip-bg); /* For right placement */
+        }
+        /* --- End Tooltip Override Styles --- */
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle btn btn-accent d-md-none" id="mobileMenuToggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-logo">BS</div>
+        <ul class="nav flex-column sidebar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html" data-bs-toggle="tooltip" data-bs-placement="right" title="Return to Homepage"><i class="bi bi-house"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="cutting-room.html" data-bs-toggle="tooltip" data-bs-placement="right" title="Master cooking techniques"><i class="bi bi-book"></i></a></li>
+            <li class="nav-item"><a class="nav-link active" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Learn about our history and heritage"><i class="bi bi-info-circle"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="contactus.html" data-bs-toggle="tooltip" data-bs-placement="right" title="Get in touch with us"><i class="bi bi-envelope"></i></a></li>
+        </ul>
+    </nav>
+
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark top-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="text-accent">BS</span> <span class="text-white">ButcherShop</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="topNavbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="shop.html">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cutting-room.html">The Cutting Room</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contactus.html">Contact Us</a></li>
+                </ul>
+                <a href="shop.html" class="btn btn-accent btn-sm">Shop Online</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto hero-content" data-aos="fade-up" data-aos-duration="1000">
+                    <h1 class="display-3 fw-bold text-white">Our <span class="text-accent">Heritage & Craft</span></h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="pt-5">
+        <!-- BEGIN: LegacySection -->
+        <section class="py-5 legacy-section-bg">
+            <div class="container py-5">
+                <div class="section-content-overlay"> <!-- Added overlay container -->
+                    <div class="row align-items-center g-5">
+                        <!-- Butcher Photo -->
+                        <div class="col-lg-6" data-aos="fade-right">
+                            <img alt="Master Butcher at work" class="img-fluid rounded shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGnbCiGkKaSaws7279aPsD-wf7Low-khBowz28oOPzak4mYYvTJfPaNXkGwLN3ugF0V71-9LIuHJbcpwnb1bepfyhx1P3Gyt2xYUm5uX-87DLyLRXqdG7MFeGTVqSSGWrUOevbMiCwJWE-lD9gzvZ9ShfHIP5LMACWNEpKAjVxj4a1wzD5XOeKejCXITZe-FZzCpweuu9B3j8ZqNFyUivutaB8knmYU_VcQauY0t2KIBPGvSPpDMt_TkUzCAPaOp7yB9JPvUXZcyM"/>
+                        </div>
+                        <!-- Text Content -->
+                        <div class="col-lg-6" data-aos="fade-left">
+                            <h2 class="display-5 text-white mb-4">A Legacy of Quality</h2>
+                            <div class="space-y-4 text-light">
+                                <p>
+                                    Generations of expertise still mark the very core of our craft. We maintain the highest standards of animal welfare and traditional butchery, ensuring that every cut we provide meets the exceptional quality our customers expect and deserve.
+                                </p>
+                                <p>
+                                    Our country family values fuel our commitment to ethical sourcing. We work hand-in-hand with local farms that share our vision for sustainability, biodiversity, and the highest standards of land stewardship.
+                                </p>
+                                <div class="fst-italic text-accent p-3 my-3 fs-5 fw-bold" style="background-color: rgba(10, 10, 10, 0.7); border-left: 4px solid var(--accent-color); border-radius: 4px;">
+                                  National traditions meet modern sustainable practices in every cut we prepare.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End overlay container -->
+            </div>
+        </section>
+        <!-- END: LegacySection -->
+
+        <!-- BEGIN: ValuesSection -->
+        <section class="py-5 values-section-bg">
+            <div class="container py-5">
+                <div class="section-content-overlay"> <!-- Added overlay container -->
+                    <h2 class="display-5 text-center mb-5 text-white" data-aos="fade-up">Our Values</h2>
+                    <div class="row g-4">
+                        <!-- Ethical Sourcing -->
+                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                            <div class="value-card text-center p-4 h-100">
+                                <div class="mb-4">
+                                    <img alt="Ethical Sourcing" class="img-fluid mx-auto" style="max-height: 150px;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS0kWpWAtKL7lWYB4fnCyANi4dUANRZyLAVcfiLBMhxsU6HYAhbPEMj8WHAde6TdXo6uSzDG8yYH5PKe7tU9jIKZi3BAAHJ1f6J1RIQ4cG8wcKYiXakpVjvcNZ3p2c146QtokIMPgZ7MiNDDxvkG51nvvu6gQ3a3EMdyTS3_RZqwMZ_QoDwrp5uoJADuPK2aRwwJ76ZYOHBahJk9PPVkAOoE5b6E7GfJKYE5_9nWgKyk1IAvPx8vqTARWs3Mkcw_J4-9jE5z5IW8E"/>
+                                </div>
+                                <h3 class="h5 text-white mb-2">Ethical Sourcing</h3>
+                                <p class="text-light opacity-75 small">
+                                    Guaranteed quality pasture-raised livestock from farms committed to the highest standards of animal welfare.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Master Butchery -->
+                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                            <div class="value-card text-center p-4 h-100">
+                                <div class="mb-4">
+                                    <img alt="Master Butchery" class="img-fluid mx-auto" style="max-height: 150px;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS0kWpWAtKL7lWYB4fnCyANi4dUANRZyLAVcfiLBMhxsU6HYAhbPEMj8WHAde6TdXo6uSzDG8yYH5PKe7tU9jIKZi3BAAHJ1f6J1RIQ4cG8wcKYiXakpVjvcNZ3p2c146QtokIMPgZ7MiNDDxvkG51nvvu6gQ3a3EMdyTS3_RZqwMZ_QoDwrp5uoJADuPK2aRwwJ76ZYOHBahJk9PPVkAOoE5b6E7GfJKYE5_9nWgKyk1IAvPx8vqTARWs3Mkcw_J4-9jE5z5IW8E"/>
+                                </div>
+                                <h3 class="h5 text-white mb-2">Master Butchery</h3>
+                                <p class="text-light opacity-75 small">
+                                    We use traditional methods passed down through generations to provide artisan cuts and precision mastery.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Zero Waste -->
+                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                            <div class="value-card text-center p-4 h-100">
+                                <div class="mb-4">
+                                    <img alt="Zero Waste" class="img-fluid mx-auto" style="max-height: 150px;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS0kWpWAtKL7lWYB4fnCyANi4dUANRZyLAVcfiLBMhxsU6HYAhbPEMj8WHAde6TdXo6uSzDG8yYH5PKe7tU9jIKZi3BAAHJ1f6J1RIQ4cG8wcKYiXakpVjvcNZ3p2c146QtokIMPgZ7MiNDDxvkG51nvvu6gQ3a3EMdyTS3_RZqwMZ_QoDwrp5uoJADuPK2aRwwJ76ZYOHBahJk9PPVkAOoE5b6E7GfJKYE5_9nWgKyk1IAvPx8vqTARWs3Mkcw_J4-9jE5z5IW8E"/>
+                                </div>
+                                <h3 class="h5 text-white mb-2">Zero Waste</h3>
+                                <p class="text-light opacity-75 small">
+                                    Our commitment to nose-to-tail butchery ensures every part of the animal is used with respect and purpose.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Direct from Farm -->
+                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                            <div class="value-card text-center p-4 h-100">
+                                <div class="mb-4">
+                                    <img alt="Direct from Farm" class="img-fluid mx-auto" style="max-height: 150px;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS0kWpWAtKL7lWYB4fnCyANi4dUANRZyLAVcfiLBMhxsU6HYAhbPEMj8WHAde6TdXo6uSzDG8yYH5PKe7tU9jIKZi3BAAHJ1f6J1RIQ4cG8wcKYiXakpVjvcNZ3p2c146QtokIMPgZ7MiNDDxvkG51nvvu6gQ3a3EMdyTS3_RZqwMZ_QoDwrp5uoJADuPK2aRwwJ76ZYOHBahJk9PPVkAOoE5b6E7GfJKYE5_9nWgKyk1IAvPx8vqTARWs3Mkcw_J4-9jE5z5IW8E"/>
+                                </div>
+                                <h3 class="h5 text-white mb-2">Direct from Farm</h3>
+                                <p class="text-light opacity-75 small">
+                                    Direct quality from honest local producers, with full transparency on the journey from farm to table.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End overlay container -->
+            </div>
+        </section>
+        <!-- END: ValuesSection -->
+
+        <!-- BEGIN: TeamSection -->
+        <section class="py-5 team-section-bg">
+            <div class="container py-5">
+                <div class="section-content-overlay"> <!-- Added overlay container -->
+                    <h2 class="display-5 text-center mb-5 text-white" data-aos="fade-up">Meet the Team</h2>
+                    <div class="row g-4">
+                        <!-- Team Member 1 -->
+                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                            <div class="team-member-card">
+                                <div class="p-3">
+                                    <img alt="John Smith" class="team-member-img grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjx6QUld5s0WK9vPtYT36GCeSvGSdVmzdKobQ5__nr2rkRdRV50c5LK_f32-KPgrWGDXCaYHkC3NqzmNpy56gJB-sMneXQCCgTLoKLWFt3pPQ9mNvIaNwBSTqJAvbfUmN6ZRTjTCHwFmhRRgnSJxz81IQWGIXQu9mBLWwdRrTKQY6iFJWdxzb8HJk9pl6P0HYcRovKciNe6Nddyj6Um4eEzUuywpgBOZPlSCpyJr9Wlco4KaYVUStHuZJXTmFWOBUYQNcON4hTfVU"/>
+                                </div>
+                                <div class="team-member-info">
+                                    <h4 class="h6 mb-1">John Smith</h4>
+                                    <div class="team-member-role">Master Butcher</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Team Member 2 -->
+                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                            <div class="team-member-card">
+                                <div class="p-3">
+                                    <img alt="Sarah Lee" class="team-member-img grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2xZ2lhgk515VYxZvMVr9yqwUw3ohwhVp26nCLEt-JxL8GQ8W7QFZRcIaBx-WQwIgUyGX95eh8C9czmiMeQQc-ombLfFkDjVtlNzERaLFXAqkZtQNSbPtA1JKbq-sDk_1JfTk-smUCFJCnaWw_FChCRf_dmIgs1lWH2hes5AD5EJJCLaDjO_qRzG4pHLX7evLwWLK-gFWVsHMSFaJIrBMmLmgWzbo7aPC5j8sX-50-vPktCmW87qlC96NnDi9txxHm634iE7w3hhE"/>
+                                </div>
+                                <div class="team-member-info">
+                                    <h4 class="h6 mb-1">Sarah Lee</h4>
+                                    <div class="team-member-role">Head of Sourcing</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Team Member 3 -->
+                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                            <div class="team-member-card">
+                                <div class="p-3">
+                                    <img alt="Sarah Honore" class="team-member-img grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV4UVCd9qVV48Kp68oFHUHZdTOII4hDloSdb0VHh2EVM-xzOvckiuRhI9ByEOa1jX7f2KYttTnYwFz2hIFSbH1ZMoOVz0qsoamOrWvvdkhbMn6eZxU2MnYqaZX5xHbTx2sNfsBLiwKy65GSPDULv778HjUMK2QCCdhOKimtkW85EslyKbMNMUZvFZxTk5NqGYHWQYDxxWjj-Xfbg_qioeFldMCt96T0-S07H_g2mPtzUtXDPnAcHP-AFYD1VU8ON18GuQh0Mx2L5Y"/>
+                                </div>
+                                <div class="team-member-info">
+                                    <h4 class="h6 mb-1">Sarah Honore</h4>
+                                    <div class="team-member-role">Head of Sourcing</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Team Member 4 -->
+                        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                            <div class="team-member-card">
+                                <div class="p-3">
+                                    <img alt="Sislen Fiame" class="team-member-img grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxG4xxmzAAqrH31EHY60U8_GyvwM3Kpf611VQCVrAAZYUF24HywGb6Mr9WjUJOIHE-Cl6eG0Rzem6A8nTUNcQ14gsaRtlw7ScZDPZ-_Kzd436xVJDEO2f_IS_pWBYBaEpXjm2k4FlDBBJGosdlWiyUkXeFtY9b_Qd3QfeIRUKKtgShziEasJMbvwjc9dmHdwqKSH7ZiZNvtDRE_PqvvZPtXUGPG3qknmvROfVLQydjQIAS37RZsIyCWydfP17Ez4KmyFcwcnsLBBs"/>
+                                </div>
+                                <div class="team-member-info">
+                                    <h4 class="h6 mb-1">Sislen Fiame</h4>
+                                    <div class="team-member-role">Master Butcher</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End overlay container -->
+            </div>
+        </section>
+        <!-- END: TeamSection -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="pt-5 pb-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h4 class="text-accent mb-3">ButcherShop</h4>
+                    <p class="small text-light opacity-50">Preserving the traditional craft of the artisan butcher with modern culinary innovation. Sourced from single-origin farms dedicated to sustainable practices.</p>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-uppercase mb-3 text-white">Heritage</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Provenance</a></li>
+                        <li class="mb-2"><a href="#">Our Artisans</a></li>
+                        <li class="mb-2"><a href="#">Ethics</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-uppercase mb-3 text-white">Concierge</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Shipping</a></li>
+                        <li class="mb-2"><a href="#">Gift Cards</a></li>
+                        <li class="mb-2"><a href="contactus.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-uppercase mb-3 text-white">Social</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Instagram</a></li>
+                        <li class="mb-2"><a href="#">Journal</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-uppercase mb-3 text-white">Legal</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#">Privacy</a></li>
+                        <li class="mb-2"><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="text-center small text-light opacity-50">
+                &copy; 2026 ButcherShop. Crafted for the Connoisseur.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({ once: true, offset: 100, duration: 800 });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+        });
+
+        // Function to initialize tooltips
+        function enableTooltips() {
+            // Select all elements with the data-bs-toggle="tooltip" attribute
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            // Create a new Tooltip instance for each selected element
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    // Optional: Configure tooltip behavior
+                    trigger: 'hover' // Default is 'hover focus', you can change if needed
+                });
+            });
+        }
+
+        // Call the function to enable tooltips once the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', enableTooltips);
+
+    </script>
+</body>
+</html>
+```
