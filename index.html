@@ -723,6 +723,63 @@
             border-right-color: var(--bs-tooltip-bg); /* For right placement */
         }
         /* --- End Tooltip Override Styles --- */
+
+        /* --- Guide Card Styles (For Signature Profiles) --- */
+        .guide-card {
+            background-color: rgba(17, 17, 17, 0.95); /* Dark semi-transparent background */
+            border: 1px solid rgba(139, 0, 0, 0.3);   /* Subtle red border */
+            transition: all 0.4s ease;                 /* Smooth animation */
+            overflow: hidden;                          /* Keeps image inside rounded corners */
+            backdrop-filter: blur(10px);               /* Glass effect */
+            height: 100%;                              /* Ensures equal height in grid */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Hover Animation: Lift up and glow */
+        .guide-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(139, 0, 0, 0.3);
+        }
+
+        /* Image Styling within the card */
+        .guide-card img {
+            height: 220px;          /* Fixed height for uniformity */
+            object-fit: cover;      /* Crops image nicely */
+            width: 100%;
+            transition: transform 0.6s ease; /* Zoom effect setup */
+        }
+
+        /* Optional: Slight zoom on image hover */
+        .guide-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Content padding area */
+        .guide-card .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;           /* Pushes content to fill space */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ✅ ENHANCED RED LABEL LEGIBILITY — Matches Featured Cut & Collections */
+        .guide-card h6.text-accent {
+            color: #ff4d4d !important;           /* Brighter red for contrast */
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.65);     /* Dark pill backing */
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent-color); /* Red accent bar */
+            margin-bottom: 0.75rem !important;
+            align-self: flex-start;              /* Prevents full-width stretch */
+            font-size: 0.7rem !important;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -981,38 +1038,61 @@
 
     <!-- Signature Profiles (Animated) -->
          <!-- Signature Profiles (Background Image, Cards, Zoom) -->
+    <!-- Signature Profiles (Image Cards Style) -->
+    <!-- Signature Profiles (Image Cards Style) -->
     <section id="profiles" class="signature-profiles py-5">
         <div class="container py-5">
             <h2 class="text-center mb-5 text-white" data-aos="fade-up">Signature Profiles</h2>
             <div class="row g-4">
-                <!-- Card 1 -->
+                
+                <!-- Card 1: Wagyu A5 -->
                 <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                    <div class="profile-card">
-                        <h5 class="text-accent mb-0">Wagyu A5</h5>
-                        <p class="small text-light opacity-75 mb-0 mt-3">"Buttery umami-rich, delicate marbling that melts instantly."</p>
+                    <div class="guide-card">
+                        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=2070&auto=format&fit=crop" alt="Wagyu A5">
+                        <div class="card-content">
+                            <h6 class="text-accent text-uppercase small mb-2" style="letter-spacing: 1px;">Premium Grade</h6>
+                            <h5 class="text-white mb-3">Wagyu A5</h5>
+                            <p class="text-light opacity-75 small mb-0">"Buttery umami-rich, delicate marbling that melts instantly on the palate."</p>
+                        </div>
                     </div>
                 </div>
-                <!-- Card 2 -->
+
+                <!-- Card 2: Dry Aged Ribeye -->
                 <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                    <div class="profile-card">
-                        <h5 class="text-accent mb-0">Dry Aged Ribeye</h5>
-                        <p class="small text-light opacity-75 mb-0 mt-3">"Intense nutty profiles with a distinct blue-cheese finish."</p>
+                    <div class="guide-card">
+                        <img src="https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?q=80&w=2070&auto=format&fit=crop" alt="Dry Aged Ribeye">
+                        <div class="card-content">
+                            <h6 class="text-accent text-uppercase small mb-2" style="letter-spacing: 1px;">Aged 45+ Days</h6>
+                            <h5 class="text-white mb-3">Dry Aged Ribeye</h5>
+                            <p class="text-light opacity-75 small mb-0">"Intense nutty profiles with a distinct blue-cheese finish and tender texture."</p>
+                        </div>
                     </div>
                 </div>
-                <!-- Card 3 -->
+
+                <!-- Card 3: Filet Mignon -->
                 <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-                    <div class="profile-card">
-                        <h5 class="text-accent mb-0">Filet Mignon</h5>
-                        <p class="small text-light opacity-75 mb-0 mt-3">"Unmatched tenderness with a clean, mineral aftertaste."</p>
+                    <div class="guide-card">
+                        <img src="https://images.unsplash.com/photo-1558030006-450675393462?q=80&w=2070&auto=format&fit=crop" alt="Filet Mignon">
+                        <div class="card-content">
+                            <h6 class="text-accent text-uppercase small mb-2" style="letter-spacing: 1px;">The Tender Cut</h6>
+                            <h5 class="text-white mb-3">Filet Mignon</h5>
+                            <p class="text-light opacity-75 small mb-0">"Unmatched tenderness with a clean, mineral aftertaste and lean profile."</p>
+                        </div>
                     </div>
                 </div>
-                <!-- Card 4 -->
+
+                <!-- Card 4: Chateaubriand -->
                 <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-                    <div class="profile-card">
-                        <h5 class="text-accent mb-0">Chateaubriand</h5>
-                        <p class="small text-light opacity-75 mb-0 mt-3">"The king of roasts: subtle, elegant, and perfectly uniform."</p>
+                    <div class="guide-card">
+                        <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=2070&auto=format&fit=crop" alt="Chateaubriand">
+                        <div class="card-content">
+                            <h6 class="text-accent text-uppercase small mb-2" style="letter-spacing: 1px;">For Sharing</h6>
+                            <h5 class="text-white mb-3">Chateaubriand</h5>
+                            <p class="text-light opacity-75 small mb-0">"The king of roasts: subtle, elegant, and perfectly uniform from edge to edge."</p>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
